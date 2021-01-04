@@ -20,6 +20,6 @@ RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
   echo "tlpdbopt_sys_bin /usr/bin" >> install.profile && \
   ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
 
-RUN /usr/local/texlive/2018/bin/x86_64-linux/tlmgr path add
-RUN apt-get update && apt-get install -y  rpm gdc gfortran docbook-xml docbook-xsl xsltproc libxml2-dev libxslt-dev fop docbook-xsl-doc-pdf python-pip python-dev build-essential libpcre3-dev autoconf automake libtool bison subversion git
+RUN $(find /usr/local/texlive -name tlmgr) path add
+RUN apt-get update && apt-get install -y rpm gdc gfortran docbook-xml docbook-xsl xsltproc libxml2-dev libxslt-dev fop docbook-xsl-doc-pdf python-pip python-dev build-essential libpcre3-dev autoconf automake libtool bison subversion git
 RUN apt-get -y --no-install-recommends install ghostscript
