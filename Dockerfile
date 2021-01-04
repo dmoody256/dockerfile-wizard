@@ -13,7 +13,7 @@ RUN apt-get update && \
 RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
   tar xzf install-tl-unx.tar.gz && rm install-tl-unx.tar.gz && \
   cd install-tl* && \
-  echo "selected_scheme scheme-full" > install.profile && \
+  echo "selected_scheme scheme-small" > install.profile && \
   echo "tlpdbopt_install_docfiles 0" >> install.profile && \
   echo "tlpdbopt_install_srcfiles 0" >> install.profile && \
   echo "tlpdbopt_autobackup 0" >> install.profile && \
