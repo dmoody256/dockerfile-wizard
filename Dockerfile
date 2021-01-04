@@ -5,7 +5,7 @@ ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \
 
 RUN apt-get update && \
   apt-get install -y wget biber unzip tar \
-  make fontconfig perl openjdk-8-jre libgetopt-long-descriptive-perl \
+  make fontconfig perl default-jdk libgetopt-long-descriptive-perl \
   libdigest-perl-md5-perl libncurses5 \
   python3-pygments && \
   rm -rf /var/lib/apt/lists/*
@@ -21,5 +21,5 @@ RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
   ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
 
 RUN /usr/local/texlive/2018/bin/x86_64-linux/tlmgr path add
-RUN apt-get update && apt-get install -y default-jdk rpm gdc gfortran docbook-xml docbook-xsl xsltproc libxml2-dev libxslt-dev fop docbook-xsl-doc-pdf python-pip python-dev build-essential libpcre3-dev autoconf automake libtool bison subversion git
+RUN apt-get update && apt-get install -y  rpm gdc gfortran docbook-xml docbook-xsl xsltproc libxml2-dev libxslt-dev fop docbook-xsl-doc-pdf python-pip python-dev build-essential libpcre3-dev autoconf automake libtool bison subversion git
 RUN apt-get -y --no-install-recommends install ghostscript
