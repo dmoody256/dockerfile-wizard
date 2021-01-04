@@ -132,3 +132,6 @@ RUN apt-get -y install libgconf-2-4 \
   && mv chromedriver /usr/local/bin/chromedriver \
   && chmod +x /usr/local/bin/chromedriver"
 fi
+
+echo "RUN apt-get install -y rpm gdc gfortran docbook-xml docbook-xsl xsltproc libxml2-dev libxslt-dev fop docbook-xsl-doc-pdf python-pip python-dev build-essential libpcre3-dev autoconf automake libtool bison subversion git"
+echo "RUN apt-get -y --no-install-recommends install texlive texlive-latex3 biber texmaker ghostscript texlive-bibtex-extra texlive-latex-extra texlive-font-utils"
