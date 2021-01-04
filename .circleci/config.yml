@@ -85,7 +85,9 @@ workflows:
   dockerfile_wizard:
     jobs:
       - build:
+          context: scons
 
       - test_image:
+          context: scons
           requires:
             - build
