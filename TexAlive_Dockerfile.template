@@ -18,7 +18,7 @@ RUN wget http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%$YEAR%$/tlne
   echo "tlpdbopt_install_srcfiles 0" >> install.profile && \
   echo "tlpdbopt_autobackup 0" >> install.profile && \
   echo "tlpdbopt_sys_bin /usr/bin" >> install.profile && \
-  ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
+  ./install-tl -repository http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%$YEAR%$/tlnet-final -profile install.profile && cd .. && rm -rf install-tl*
 
 RUN $(find /usr/local/texlive -name tlmgr) path add
 ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
