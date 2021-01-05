@@ -21,4 +21,4 @@ RUN wget http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%$YEAR%$/tlne
   ./install-tl -repository http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%$YEAR%$/tlnet-final -profile install.profile && cd .. && rm -rf install-tl*
 
 RUN $(find /usr/local/texlive -name tlmgr) path add
-ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
+ENV PATH="/usr/local/texlive/%$YEAR%$/bin/x86_64-linux:${PATH}"
