@@ -21,4 +21,5 @@ RUN wget http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%$YEAR%$/tlne
   ./install-tl -repository http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/%$YEAR%$/tlnet-final -profile install.profile && cd .. && rm -rf install-tl*
 
 RUN $(find /usr/local/texlive -name tlmgr) path add
+RUN apt-get install -y docbook-xml docbook-xsl xsltproc libxml2-dev libxslt-dev fop docbook-xsl-doc-pdf bison
 ENV PATH="/usr/local/texlive/%$YEAR%$/bin/x86_64-linux:${PATH}"
