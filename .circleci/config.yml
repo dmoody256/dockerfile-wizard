@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - run: sed 's/%$YEAR%$/<< parameters.year >>' < TexAlive_Dockerfile.template | sed 's/%$PYTHON%$/<< parameters.python >>' > Dockerfile
+      - run: sed 's/%$YEAR%$/<< parameters.year >>/' < TexAlive_Dockerfile.template | sed 's/%$PYTHON%$/<< parameters.python >>/' > Dockerfile
       - run: docker build -t $DOCKER_USERNAME/SconsTexAlive:TexAlive<< parameters.year >>Python<< parameters.year >>
       - run: docker push $DOCKER_USERNAME/SconsTexAlive:TexAlive<< parameters.year >>Python<< parameters.year >> && sleep 10
 
