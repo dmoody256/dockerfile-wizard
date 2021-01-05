@@ -1,91 +1,38 @@
-image_config: &image_config
 
-  # make sure to set your Docker Hub username & password in CircleCI,
-  # either as project-specific environment variables
-  # or as resources in your organization's org-global Context
 
-  IMAGE_NAME: scons-test-image
+version: 2.1
 
-  IMAGE_TAG: scons-test
-
-  # NOTE: if you're modifying this config.yml file manually
-  # rather than using the included setup script,
-  # make sure you also add the values of your IMAGE_NAME & IMAGE_TAG variables
-  # to the `test_image` job (line 55)
-
-  LINUX_VERSION: UBUNTU_XENIAL
-
-  # RUBY_VERSION_NUM: # pick a version from https://cache.ruby-lang.org/pub/ruby
-
-  # NODE_VERSION_NUM: # pick a version from https://nodejs.org/dist
-
-  PYTHON_VERSION_NUM: 3.8.7
-
-  JAVA: true
-
-  MYSQL_CLIENT: false
-
-  POSTGRES_CLIENT: false
-
-  DOCKERIZE: true
-
-  BROWSERS: false
-
-version: 2
 jobs:
-  build:
+  build_texalive:
     machine: true
-    environment:
-      <<: *image_config
+    parameters:
+      year:
+        type: string
+      python:
+        type: string
 
     steps:
       - checkout
-
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-
-      - run: docker build -t $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
-
-      - run: docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG && sleep 10
-
-      - store_artifacts:
-          path: Dockerfile
-
-  test_image:
-    docker:
-      - image: $DOCKER_USERNAME/scons-test-image:scons-test
-        environment:
-          <<: *image_config
-
-    steps:
-      - checkout
-
-      - run:
-          name: start Xvfb for phantomjs test
-          # command: Xvfb :99
-          # background: true
-
-      - run:
-          name: bats tests
-          command: |
-            mkdir -p test_results/bats
-            bats scripts/tests.bats | \
-            perl scripts/tap-to-junit.sh > \
-            test_results/bats/results.xml
-
-      - store_test_results:
-          path: test_results
-
-      - store_artifacts:
-          path: test_results
+      - run: sed 's/%$YEAR%$/<< parameters.year >>' < TexAlive_Dockerfile.template | sed 's/%$PYTHON%$/<< parameters.python >>' > Dockerfile
+      - run: docker build -t $DOCKER_USERNAME/SconsTexAlive:TexAlive<< parameters.year >>Python<< parameters.year >>
+      - run: docker push $DOCKER_USERNAME/SconsTexAlive:TexAlive<< parameters.year >>Python<< parameters.year >> && sleep 10
 
 workflows:
-  version: 2
-  dockerfile_wizard:
+  all_tests:
     jobs:
-      - build:
-          context: scons
-
-      - test_image:
-          context: scons
-          requires:
-            - build
+      - build_texalive:
+          matrix:
+            parameters:
+              year: [
+                '2017',
+                '2018',
+                '2019',
+              ]
+              python: [
+                '3.9',
+                '3.8',
+                '3.7',
+              ]
